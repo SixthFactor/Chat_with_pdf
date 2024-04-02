@@ -92,8 +92,8 @@ def update_and_display_conversation(user_question, response):
     
     # Display the conversation history
     for question, response in st.session_state.conversation_history:
-        st.text_area(f"Q: {question}")
-        st.text_area(f"A: {response}")
+        st.text(f"Q: {question}")
+        st.text(f"A: {response}")
         st.markdown("---")  # Separator for readability
 
 
