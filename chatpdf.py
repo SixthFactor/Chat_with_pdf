@@ -86,7 +86,7 @@ def user_input(user_question):
     
     # Update the conversation history in the session state
     st.session_state.conversation_history.append((user_question, response["output_text"]))
-    st.write("Reply: ", response["output_text"])
+    # st.write("Reply: ", response["output_text"])
 
 # Function to display the conversation history
 def display_history():
