@@ -45,12 +45,13 @@ def get_vector_store(text_chunks):
 
 def get_conversational_chain():
 
-    prompt_template = """
-    Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-    provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
+    prompt_template = """You are an expert market researcher with 20 years of experience. For the last 10 years you have been doing research in the middle east region to understand consumer sentiment. 
+    You are a post graduate in psycology and have done your doctorate in emotions and culture. You  have an in depth understanding of consumer language culture and geography of the middle east. 
+    Please act as SixthFactor the consumer sentiment expert  bot and using the consumer comments we have captured please answer any questions with as much detail as possible. 
+    Please be professional and courteous when answering these queries.
+    \n\n
     Context:\n {context}?\n
     Question: \n{question}\n
-
     Answer:
     """
 
@@ -86,7 +87,7 @@ def user_input(user_question):
 def main():
     st.set_page_config("Chat PDF")
     st.header("Chat with Model💁")
-    user_question = st.text_input("Ask a Question from the PDF Files")
+    user_question = st.chat_input("Ask a Question from the PDF Files")
 
     if user_question:
         user_input(user_question)
