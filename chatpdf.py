@@ -62,6 +62,10 @@ def get_conversational_chain():
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
 
     return chain
+# Initialize conversation history in session state if not already present
+if 'conversation_history' not in st.session_state:
+    st.session_state.conversation_history = []
+
 
 
 
@@ -78,9 +82,16 @@ def user_input(user_question):
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
     # print(response)
+    st.session_state.conversation_history.append((user_question, response["output_text"]))
     st.write("Reply: ", response["output_text"])
 
-
+if st.session_state.conversation_history:
+    for i, (question, response) in enumerate(st.session_state.conversation_history, 1):
+        st.markdown(f"**Q{i}:** {question}")
+        st.markdown(f"**A{i}:** {response}")
+        st.markdown("---")  # Add a separator for readability
+else:
+    st.write("No conversation history yet.")
 
 
 def main():
