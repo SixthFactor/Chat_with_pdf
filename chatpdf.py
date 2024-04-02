@@ -116,7 +116,7 @@ def main():
 
     if user_question:
         response = user_input(user_question)
-        update_and_display_conversation(user_question, response)
+        update_and_display_conversation()
 
     with st.sidebar:
         st.title("Menu:")
