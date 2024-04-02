@@ -82,20 +82,31 @@ def user_input(user_question):
     # st.write("Reply: ", response["output_text"])
     return response["output_text"]
 
-def update_and_display_conversation(user_question, response):
+# def update_and_display_conversation(user_question, response):
+#     # Initialize the conversation history if not already done
+#     if 'conversation_history' not in st.session_state:
+#         st.session_state.conversation_history = []
+    
+#     # Append the new question-response pair
+#     st.session_state.conversation_history.append((user_question, response))
+    
+#     # Display the conversation history
+#     for question, response in st.session_state.conversation_history:
+#         st.text(f"Q: {question}")
+#         st.text(f"A: {response}")
+#         st.markdown("---")  # Separator for readability
+def update_and_display_conversation():
     # Initialize the conversation history if not already done
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
     
-    # Append the new question-response pair
-    st.session_state.conversation_history.append((user_question, response))
-    
     # Display the conversation history
-    for question, response in st.session_state.conversation_history:
-        st.text(f"Q: {question}")
-        st.text(f"A: {response}")
+    for idx, (question, response) in enumerate(st.session_state.conversation_history, start=1):
+        # Use text_area for both question and answer to make them appear in larger, scrollable boxes
+        # Label them as Q1, Q2,... and A1, A2,... for clarity
+        st.text_area(f"Q{idx}: ", question, height=100, key=f"Q{idx}")
+        st.text_area(f"A{idx}: ", response, height=150, key=f"A{idx}")
         st.markdown("---")  # Separator for readability
-
 
 
 def main():
