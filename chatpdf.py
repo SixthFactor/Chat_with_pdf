@@ -77,8 +77,8 @@ def user_input(user_question):
     response = chain(
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
-
-    print(response)
+    st.write(response)
+    # print(response)
     st.write("Reply: ", response["output_text"])
 
 
@@ -88,9 +88,10 @@ def main():
     st.set_page_config("Chat PDF")
     st.header("Chat with Model💁")
     user_question = st.chat_input("Ask a Question from the PDF Files")
+    st.write(user_question)
 
     if user_question:
-        user_input(user_question)
+        user_input(user_question) 
 
     with st.sidebar:
         st.title("Menu:")
