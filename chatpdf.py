@@ -95,7 +95,7 @@ def user_input(user_question):
 #         st.text(f"Q: {question}")
 #         st.text(f"A: {response}")
 #         st.markdown("---")  # Separator for readability
-def update_and_display_conversation():
+def update_and_display_conversation(user_question, response):
     # Initialize the conversation history if not already done
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
@@ -116,7 +116,7 @@ def main():
 
     if user_question:
         response = user_input(user_question)
-        update_and_display_conversation()
+        update_and_display_conversation(user_question, response)
 
     with st.sidebar:
         st.title("Menu:")
