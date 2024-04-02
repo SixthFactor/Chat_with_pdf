@@ -62,22 +62,6 @@ def get_conversational_chain():
 
     return chain
 
-# Function to translate roles between Gemini-Pro and Streamlit terminology
-def translate_role_for_streamlit(user_role):
-    if user_role == "model":
-        return "assistant"
-    else:
-        return user_role
-
-# Initialize chat session in Streamlit if not already present
-if "chat_session" not in st.session_state:
-    st.session_state.chat_session = model.start_chat(history=[])
-
-# Display the chat history
-for message in st.session_state.chat_session.history:
-    with st.chat_message(translate_role_for_streamlit(message.role)):
-        st.markdown(message.parts[0].text)
-
 
 
 def user_input(user_question):
@@ -89,23 +73,38 @@ def user_input(user_question):
     chain = get_conversational_chain()
 
     
-    response = st.session_state.chat_session.chain(
+    response = chain(
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
 
-# Display Gemini-Pro's response
-    with st.chat_message("assistant"):
-        st.markdown(response.text)
-    st.write("Reply: ", response["output_text"])
+    # print(response)
+    # st.write("Reply: ", response["output_text"])
+    return response["output_text"]
+
+def update_and_display_conversation(user_question, response):
+    # Initialize the conversation history if not already done
+    if 'conversation_history' not in st.session_state:
+        st.session_state.conversation_history = []
+    
+    # Append the new question-response pair
+    st.session_state.conversation_history.append((user_question, response))
+    
+    # Display the conversation history
+    for question, response in st.session_state.conversation_history:
+        st.text(f"Q: {question}")
+        st.text(f"A: {response}")
+        st.markdown("---")  # Separator for readability
+
 
 
 def main():
     st.set_page_config("Chat PDF")
     st.header("Chat with Model💁")
-    user_question = st.text_input("Ask a Question from the PDF Files")
+    user_question = st.chat_input("Ask a Question from the PDF Files")
 
     if user_question:
-        user_input(user_question)
+        response = user_input(user_question)
+        update_and_display_conversation(user_question, response)
 
     with st.sidebar:
         st.title("Menu:")
