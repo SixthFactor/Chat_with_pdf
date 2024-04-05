@@ -104,37 +104,26 @@ def main():
     user_question = st.chat_input("Ask a Question from the PDF Files")
 
     if user_question:
-        response = user_input(user_question)
-        update_and_display_conversation(user_question, response)
+        try:
+            response = user_input(user_question)
+            update_and_display_conversation(user_question, response)
+        except StopCandidateException:
+            st.warning("Please try asking your question in a different way.")
+        except Exception as e:
+            # Handle any exception by displaying an error message
+                st.error("An error occurred. Please try again.")
+        
+            
 
-    # with st.sidebar:
-    #     st.title("Menu:")
-    #     pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
-    #     if st.button("Submit & Process"):
-    #         with st.spinner("Processing..."):
-    #             raw_text = get_pdf_text(pdf_docs)
-    #             text_chunks = get_text_chunks(raw_text)
-    #             get_vector_store(text_chunks)
-    #             st.success("Done")
     with st.sidebar:
         st.title("Menu:")
         pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
         if st.button("Submit & Process"):
-            try:
-                with st.spinner("Processing..."):
-                # Assuming get_pdf_text, get_text_chunks, and get_vector_store are defined functions
-                    raw_text = get_pdf_text(pdf_docs)  # Extract text from uploaded PDFs
-                    text_chunks = get_text_chunks(raw_text)  # Break text into manageable chunks
-                    get_vector_store(text_chunks)  # Process text chunks and store vectors
-                    st.success("Done")
-            except StopCandidateException:
-            # Handle StopCandidateException specifically
-                st.warning("Please try asking your question again.")
-            except Exception as e:
-            # Handle any exception by displaying an error message
-                st.warning("Please try asking your question again.")
-
-
+            with st.spinner("Processing..."):
+                raw_text = get_pdf_text(pdf_docs)
+                text_chunks = get_text_chunks(raw_text)
+                get_vector_store(text_chunks)
+                st.success("Done")
 
 if __name__ == "__main__":
     main()
