@@ -99,7 +99,7 @@ def update_and_display_conversation(user_question, response):
 
 def main():
     st.set_page_config("Chat PDF")
-    st.header("Chat with Model💁")
+    st.header("Chat with Expert💁")
     user_question = st.chat_input("Ask a Question from the PDF Files")
 
     if user_question:
