@@ -11,6 +11,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from google.generativeai.types.generation_types import StopCandidateException
+from PyPDF2.errors import PdfReadError
 
 load_dotenv()
 os.getenv("GOOGLE_API_KEY")
