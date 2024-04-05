@@ -10,6 +10,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
+from google.generativeai.types.generation_types import StopCandidateException
 
 load_dotenv()
 os.getenv("GOOGLE_API_KEY")
@@ -126,6 +127,9 @@ def main():
                     text_chunks = get_text_chunks(raw_text)  # Break text into manageable chunks
                     get_vector_store(text_chunks)  # Process text chunks and store vectors
                     st.success("Done")
+            except StopCandidateException:
+            # Handle StopCandidateException specifically
+                st.warning("Please try asking your question again.")
             except Exception as e:
             # Handle any exception by displaying an error message
                 st.warning("Please try asking your question again.")
