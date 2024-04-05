@@ -12,24 +12,47 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from google.generativeai.types.generation_types import StopCandidateException
 from PyPDF2.errors import PdfReadError
+from docx import Document
 
 load_dotenv()
 os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-# Replace 'YOUR_API_KEY' with your actual API key
-# api_key = 'AIzaSyDMLlQUDRw0WV8iXWhVtMQkfXRFLf92aMo'
-# genai.configure(api_key=api_key)
 
+# def get_pdf_text(pdf_docs):
+#     text=""
+#     for pdf in pdf_docs:
+#         pdf_reader= PdfReader(pdf)
+#         for page in pdf_reader.pages:
+#             text+= page.extract_text()
+#     return  text
 
+def get_text_from_file(file):
+  """Extracts text from uploaded file based on its format."""
+  extension = os.path.splitext(file.name)[1].lower()
+  if extension == ".pdf":
+    pdf_reader = PdfReader(file)
+    text = ""
+    for page in pdf_reader.pages:
+      text += page.extract_text()
+    return text
+  elif extension == ".docx":
+    document = Document(file)
+    text = ""
+    for paragraph in document.paragraphs:
+      text += paragraph.text
+    return text
+  elif extension == ".txt":
+    return file.read().decode("utf-8")
+  else:
+    return None  # Handle unsupported file formats
 
 
 def get_pdf_text(pdf_docs):
-    text=""
-    for pdf in pdf_docs:
-        pdf_reader= PdfReader(pdf)
-        for page in pdf_reader.pages:
-            text+= page.extract_text()
-    return  text
+  """Extracts text from a list of PDF documents."""
+  text = ""
+  for pdf in pdf_docs:
+    text += get_text_from_file(pdf)
+  return text
 
 
 
