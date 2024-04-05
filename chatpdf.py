@@ -106,15 +106,29 @@ def main():
         response = user_input(user_question)
         update_and_display_conversation(user_question, response)
 
+    # with st.sidebar:
+    #     st.title("Menu:")
+    #     pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
+    #     if st.button("Submit & Process"):
+    #         with st.spinner("Processing..."):
+    #             raw_text = get_pdf_text(pdf_docs)
+    #             text_chunks = get_text_chunks(raw_text)
+    #             get_vector_store(text_chunks)
+    #             st.success("Done")
     with st.sidebar:
-        st.title("Menu:")
-        pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
-        if st.button("Submit & Process"):
+    st.title("Menu:")
+    pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
+    if st.button("Submit & Process"):
+        try:
             with st.spinner("Processing..."):
-                raw_text = get_pdf_text(pdf_docs)
-                text_chunks = get_text_chunks(raw_text)
-                get_vector_store(text_chunks)
+                # Assuming get_pdf_text, get_text_chunks, and get_vector_store are defined functions
+                raw_text = get_pdf_text(pdf_docs)  # Extract text from uploaded PDFs
+                text_chunks = get_text_chunks(raw_text)  # Break text into manageable chunks
+                get_vector_store(text_chunks)  # Process text chunks and store vectors
                 st.success("Done")
+        except Exception as e:
+            # Handle any exception by displaying an error message
+            st.warning("Please try asking your question again.")
 
 
 
