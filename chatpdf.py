@@ -137,8 +137,6 @@ def main():
             # Handle any exception by displaying an error message
                 st.error("An error occurred. Please try again.")
         
-            
-
     with st.sidebar:
         st.title("Menu:")
         pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
@@ -150,8 +148,8 @@ def main():
                     text_chunks = get_text_chunks(raw_text)  # Break text into manageable chunks
                     get_vector_store(text_chunks)  # Process text chunks and store vectors
                     st.success("Done")
-            except PdfReadError:
-                st.error("An error occurred while reading the PDF. Please ensure the uploaded file is a valid PDF.")
+            except TypeError:
+                st.error("An error occurred while processing the files. Please upload the files again.")
             # with st.spinner("Processing..."):
             #     raw_text = get_pdf_text(pdf_docs)
             #     text_chunks = get_text_chunks(raw_text)
