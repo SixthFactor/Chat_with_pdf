@@ -47,12 +47,12 @@ def get_text_from_file(file):
     return None  # Handle unsupported file formats
 
 
-def get_pdf_text(pdf_docs):
-  """Extracts text from a list of PDF documents."""
-  text = ""
-  for pdf in pdf_docs:
-    text += get_text_from_file(pdf)
-  return text
+# def get_pdf_text(pdf_docs):
+#   """Extracts text from a list of PDF documents."""
+#   text = ""
+#   for pdf in pdf_docs:
+#     text += get_text_from_file(pdf)
+#   return text
 
 
 
